@@ -1,2 +1,3 @@
-# comp_math
-Вычислительная математика
+# Вычислительная математика
+
+![СПбПУ](http://www.spbstu.ru/university/organizational-documents/corporate-identity/identity-files/logo_vert.png)

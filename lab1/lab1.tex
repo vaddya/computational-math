@@ -1,0 +1,49 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Техническое задание}
+
+Для функции $f(x)$ по узлам $x_k$ построить полином Лагранджа $L(x)$ 10-й степени и сплайн функцию $S(x)$. Сравнить значения трех интегралов:
+
+\begin{multicols}{3}
+	\noindent 
+	\[\int_0^3 f(x)dx\]
+	\[\int_0^3 L(x)dx\]
+	\[\int_0^3 S(x)dx\]
+\end{multicols}
+
+\section{Исходные данные}
+\vspace{-0.5cm}
+\[
+f(x) = 1 - e^{-x}
+\]
+\[
+x_k = 0.3 \cdot k\text{, при }k = 0, 1, ..., 10
+\]
+
+\section{Вычисление интегралов}
+
+\subsection{Вычисление $\int f(x)dx$}
+
+Аналитически вычислим значение интеграла:
+\vspace{-0.2cm}
+\[
+\int_0^3 f(x)dx = \int_0^3 \left(1 - e^{-x}\right) dx = \left.\left( x + e^{-x} \right)\right\vert_0^3 = 3 + e^{-3} - 1 \approx 2.04978707
+\]
+
+\subsection{Вычисление $\int L(x)dx$}
+
+\subsection{Вычисление $\int S(x)dx$}
+
+\section{Листинги}
+
+\captionof{lstlisting}{main.cpp} % для печати символ '_' требует выходной символ '\'
+\lstinputlisting[label=code:hello]{comp_math/main.cpp}
+\parindent=1cm % командна \lstinputlisting сбивает параментры отступа
+
+\section{Выводы}
+
+\end{document}
