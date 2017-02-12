@@ -6,23 +6,23 @@
 
 using namespace std;
 
-const int POINTS_NUM = 11; // количество узлов интерполяции
+const int POINTS_NUM = 11;
 
-double x[POINTS_NUM] = {}; // узлы интерполяции
-double x_inter[POINTS_NUM] = {}; // промежуточные узлы
-double f[POINTS_NUM] = {}; // значения функции в узлах
+double x[POINTS_NUM] = {};
+double x_inter[POINTS_NUM] = {};
+double f[POINTS_NUM] = {};
 
-// Вычисление значения исходной фукнции в точке x0
+
 double function(double x0) {
     return 1 - exp(-x0);
 }
 
-// Вычисление значения полинома Лагрнаджа в точке x0
+
 double lagrange(double x0) {
     return lagrange(POINTS_NUM - 1, x, f, x0);
 }
 
-// Вычисление значения сплайн фукнции в точке x0
+
 double spline(double x0) {
     double b[POINTS_NUM] = {};
     double c[POINTS_NUM] = {};
@@ -51,19 +51,19 @@ int main() {
                spline(x_inter[i]));
     }
 
-    double a = 0.0; // нижний предел интегрирования
-    double b = 3.0; // верхний предел интегрирования
-    double abserr = 1.0E-14; // абсолютная погрешность
-    double relerr = 0; // относительная погрешности
-    double errest; // реальная погрешность
-    int nofun; // количество внутренних вычислений функции
-    double flag; // индикатор надёжности
+    double a = 0.0;
+    double b = 3.0;
+    double abserr = 1.0E-14;
+    double relerr = 0;
+    double errest;
+    int nofun;
+    double flag;
 
-    double int_fun; // Значение интеграла от заданной функции
+    double int_fun;
     quanc8(function, a, b, abserr, relerr, &int_fun, &errest, &nofun, &flag);
-    double int_lagrange; // Значение интеграла от полинома Лагранджа
+    double int_lagrange;
     quanc8(lagrange, a, b, abserr, relerr, &int_lagrange, &errest, &nofun, &flag);
-    double int_spline; // Значение интеграла от сплайн функции
+    double int_spline;
     quanc8(spline, a, b, abserr, relerr, &int_spline, &errest, &nofun, &flag);
 
     printf("\n%16s %18s %18s\n", "quanc8{f(x)}", "quanc8{l(x)}", "quanc8{s(x)}");
