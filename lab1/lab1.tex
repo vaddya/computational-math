@@ -43,17 +43,17 @@
 Для вычисления значения полинома Лагранджа в некоторой точке будем использовать подпрограмму \texttt{lagrange}:
 
 \captionof{lstlisting}{main.cpp. Функция, вычисляющая значение полинома Лагранджа 10-ой степени в точке \texttt{x0}}
-\lstinputlisting[label=code:hello_mod, linerange={21-23}]{comp_math/main_no_comments.cpp}
+\lstinputlisting[linerange={21-23}]{code/main_no_comments.cpp}
 \parindent=1cm
 
 Для вычисления интеграла $\int_0^3 L(x)dx$ будет использовать подпрограмму \texttt{quanc8}:
 
 \captionof{lstlisting}{main.cpp. Параметры подпрограммы \texttt{quanc8}}
-\lstinputlisting[label=code:hello_mod, linerange={54-60}]{comp_math/main_no_comments.cpp}
+\lstinputlisting[linerange={54-60}]{code/main_no_comments.cpp}
 \parindent=1cm
 
 \captionof{lstlisting}{main.cpp. Вызов подпрограммы \texttt{quanc8}}
-\lstinputlisting[label=code:hello_mod, linerange={64-65}]{comp_math/main_no_comments.cpp}
+\lstinputlisting[linerange={64-65}]{code/main_no_comments.cpp}
 \parindent=1cm
 
 \subsection{Вычисление $\int S(x)dx$}
@@ -61,17 +61,17 @@
 Для вычисления значения сплайн функции в некоторой точке будем использовать подпрограммы \texttt{spline} для нахождения векторов \texttt{B, C, D} и \texttt{seval} для вычисления значения сплайн функции:
 
 \captionof{lstlisting}{main.cpp. Функция, вычисляющая значение сплайн функции в точке \texttt{x0}}
-\lstinputlisting[label=code:hello_mod, linerange={26-38}]{comp_math/main_no_comments.cpp}
+\lstinputlisting[linerange={26-38}]{code/main_no_comments.cpp}
 \parindent=1cm
 
 Для вычисления интеграла $\int_0^3 S(x)dx$ будем использовать подпрограмму \texttt{quanc8}:
 
 \captionof{lstlisting}{main.cpp. Параметры подпрограммы \texttt{quanc8}}
-\lstinputlisting[label=code:hello_mod, linerange={54-60}]{comp_math/main_no_comments.cpp}
+\lstinputlisting[linerange={54-60}]{code/main_no_comments.cpp}
 \parindent=1cm
 
 \captionof{lstlisting}{main.cpp. Вызов подпрограммы \texttt{quanc8}}
-\lstinputlisting[label=code:hello_mod, linerange={66-67}]{comp_math/main_no_comments.cpp}
+\lstinputlisting[linerange={66-67}]{code/main_no_comments.cpp}
 \parindent=1cm
 
 \section{Результаты}
@@ -92,14 +92,12 @@
 
 \section{Выводы}
 
-По полученным результатам можно сделать вывод, что в данном случае лучше использовать полином Лагрнджа для приближенного вычисления интеграла $\int_0^3 f(x)dx$. 
-
-\newpage
+По полученным результатам можно сделать вывод, что в данном случае лучше использовать полином Лагрнджа для приближенного вычисления интеграла $\int_0^3 f(x)dx$.
 
 \section*{Приложение}
 
 \captionof{lstlisting}{main.cpp}
-\lstinputlisting[label=code:hello]{comp_math/main.cpp}
+\lstinputlisting{code/main.cpp}
 \parindent=1cm
 
 \end{document}
