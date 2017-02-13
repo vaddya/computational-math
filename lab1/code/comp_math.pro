@@ -6,11 +6,9 @@ CONFIG -= qt
 SOURCES += main.cpp \
     lagrange.cpp \
     quanc8.cpp \
-    SPLINES.CPP \
-    old.cpp
+    SPLINES.CPP
 
 HEADERS += \
     lagrange.h \
     quanc8.h \
-    SPLINES.H \
-    main.h
+    SPLINES.H
