@@ -33,6 +33,8 @@
 \captionsetup{justification=centering,margin=1cm}
 \def\arraystretch{1.3}
 
+\usepackage{courier}
+
 \usepackage{listings}
 \lstset{ %
 extendedchars=\true,
@@ -56,3 +58,5 @@ escapeinside={\%*}{*)},			% if you want to add a comment within your code
 postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}},
 texcl=true,
 }
+
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
