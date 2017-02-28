@@ -8,3 +8,4 @@ build*
 *.pro.user
 *.user
 *.idea
+*cmake-build-debug

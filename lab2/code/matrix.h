@@ -39,11 +39,11 @@ public:
         }
     }
 
-    double const *operator[](int i) const {
+    T const *operator[](int i) const {
         return &values[i][0];
     }
 
-    double *operator[](int i) {
+    T *operator[](int i) {
         return &values[i][0];
     }
 

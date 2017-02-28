@@ -2,12 +2,15 @@
 #include <c++/iostream>
 #include "matrix.h"
 
+#define type double
+
 using namespace std;
+
 
 int main() {
     const int size = 8;
-    double p = 1.0;
-    double values[size][size] = {
+    type p = 1;
+    type values[size][size] = {
             {p + 13, 2,  8,  -7, 7,  5,  -7 - 7},
             {7,      2,  -4, 2,  3,  3,  -1, -2},
             {-7,     2,  1,  3,  6,  -6 - 3 - 4},
@@ -18,12 +21,12 @@ int main() {
             {5,      5,  -2, -2, -3, 0,  -7, 14}
     };
 
-    double *pointer[size];
+    type *pointer[size];
     for (int i = 0; i < size; ++i) {
         pointer[i] = values[i];
     }
 
-    Matrix<double> matrix(size, size, pointer);
+    Matrix<type> matrix(size, size, pointer);
     matrix[1][0] = 5;
     cout << matrix << endl;
     cout << matrix.norm() << endl;
