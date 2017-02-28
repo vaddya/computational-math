@@ -1,53 +1,31 @@
-//тестовая программа    TDECOMP_1
-#include <iostream>
-#include "MATRIX.H"
-#include <math.h>
-#define size 3
+#include <c++/array>
+#include <c++/iostream>
+#include "matrix.h"
+
 using namespace std;
-void main ()
-{
-	MATRIX(system);
-	VECTOR(vect,size);
-    float cond[size];
-    float work[size];
-    int ipvt[size];
-// задаем столбцы матрицы	
-    system[0][0]=9.1;   
-    system[1][0]=3.8;
-    system[2][0]=4.1;
-    //system[3][0]=0.250000;    
-    
-    system[0][1]=5.6;  
-    system[1][1]=5.1;   
-    system[2][1]=5.7;
-	//system[3][1]=0.200000;    
 
-    system[0][2]=7.8;
-    system[1][2]=2.8;
-    system[2][2]=1.2;
-	//system[3][2]=1.0/6.0;
+int main() {
+    const int size = 8;
+    double p = 1.0;
+    double values[size][size] = {
+            {p + 13, 2,  8,  -7, 7,  5,  -7 - 7},
+            {7,      2,  -4, 2,  3,  3,  -1, -2},
+            {-7,     2,  1,  3,  6,  -6 - 3 - 4},
+            {-2,     -8, -6, -1, 6,  2,  1,  -4},
+            {0,      4,  -7, 1,  22, 0,  -6, -6},
+            {0,      -3, -6, 6,  4,  13, 0,  6},
+            {-8,     -6, -4, 7,  -5, -5, -2, 1},
+            {5,      5,  -2, -2, -3, 0,  -7, 14}
+    };
 
-	//system[0][3]=0.250000;
-    //system[1][3]=0.200000;
-    //system[2][3]=1.0/6.0;
-	//system[3][3]=1.0/7.0;
-   
-    vect[0]=0.0;
-    vect[1]=0.0;
-    vect[2]=1.0;
-	//vect[3]=2.0;  
+    double *pointer[size];
+    for (int i = 0; i < size; ++i) {
+        pointer[i] = values[i];
+    }
 
-
-decomp(size,system,cond,ipvt,work);
-
-    cout<<"cond="<<endl;
-	cout<<cond[0]<<endl<<endl;
-// число обусловленности - значение cond[0]    
-solve(size,system,vect,ipvt);
-
-    cout<<"X:"<<endl;
-    for(int i=0;i<size;i++)
-	{cout<<vect[i]<<endl<<endl;}
-    
-
-         }
+    Matrix<double> matrix(size, size, pointer);
+    matrix[1][0] = 5;
+    cout << matrix << endl;
+    cout << matrix.norm() << endl;
+    return 0;
+}
