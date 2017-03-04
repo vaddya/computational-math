@@ -14,8 +14,7 @@ Matrix<T, N, M> findMatrixR(Matrix<T, N, M> matrix) {
 
 int main() {
     const T paramValues[] = {1, 0.1, 0.01, 0.001, 0.00001};
-
-    for (auto p : paramValues) {
+    for (double p : paramValues) {
         const T values[N][M] = {
                 {p + 13, 2,  8,  -7, 7,  5,  -7, -7},
                 {7,      2,  -4, 2,  3,  3,  -1, -2},
@@ -31,8 +30,8 @@ int main() {
         Matrix<T, N, M> matrixR = findMatrixR(matrixA);
 
         cout << "p = " << p << endl
-             << "Matrix R: " << endl << matrixR
-             << "||R|| = " << matrixR.norm() << endl << endl;
+             << "Matrix A^(-1): " << endl << matrix::invert(matrixA)
+             << "||R|| = A * A^(-1) - E = " << matrixR.norm() << endl << endl;
     }
 
     return 0;

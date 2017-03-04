@@ -176,4 +176,4 @@ namespace matrix {
     }
 
 }
-#endif // MATRIX_H
+#endif

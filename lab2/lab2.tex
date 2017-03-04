@@ -11,7 +11,7 @@
 \norm{R} = \max_k \sum_j |R_{kj}|.
 \]
 
-Используя подпрограммы \texttt{DECOMP} и \texttt{SOLVE}, вычислить $A^{-1}$ по заданной матрице $A$. Для различных значений $p$ вычислить нормы матриц $R$.
+Используя подпрограммы \textbf{DECOMP} и \textbf{SOLVE}, вычислить $A^{-1}$ по заданной матрице $A$. Для различных значений $p$ вычислить нормы матриц $R$.
 
 \section{Исходные данные}
 
@@ -38,12 +38,145 @@
 	$p = 0.00001$
 \end{multicols}
 
-\section{Вычисления}
+\section{Выполнение работы}
+
+В процессе работы была разработана программа на языке \textbf{C++}, вычисляющая искомую матрицу $R$ (см.~листинг~\ref{code:main}). Для упрощения взаимодействия с матрицами был разработан класс \textbf{Matrix} (см.~листинг~\ref{code:matrix}). Для нахождения обратной матрицы использовались подпрограммы \textbf{DECOMP} и \textbf{SOLVE}. На рисунках \ref{fig:p1} -- \ref{fig:p5} изображен вывод программы для заданных значений параметра $p$.
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.88]{1}
+	\caption{Вывод программы при $p = 1$}
+	\label{fig:p1}
+\end{center}
+\end{figure}
+
+\vspace{-1.3cm}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.88]{2}
+	\caption{Вывод программы при $p = 0.1$}
+	\label{fig:p2}
+\end{center}
+\end{figure}
+
+\vspace{-1cm}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.88]{3}
+	\caption{Вывод программы при $p = 0.01$}
+	\label{fig:p3}
+\end{center}
+\end{figure}
+
+\vspace{-1cm}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.88]{4}
+	\caption{Вывод программы при $p = 0.001$}
+	\label{fig:p4}
+\end{center}
+\end{figure}
+
+\vspace{-1cm}
+
+\begin{figure}[H]
+\begin{center}
+	\includegraphics[scale=0.88]{5}
+	\caption{Вывод программы при $p = 0.00001$}
+	\label{fig:p5}
+\end{center}
+\end{figure}
+
+\newpage
 
 \section{Результаты}
 
+Сравним значения, получившиеся путем изменения параметра p:
+
+\begin{table}[H]
+\begin{center}
+	\caption{Полученные результаты}
+	\def\tabcolsep{15pt}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		$p$ &
+		$1$ &
+		$0.1$ &
+		$0.01$ &
+		$0.001$ &
+		$0.00001$ \\
+		\hline
+		$||R||$ &
+		$2.7\cdot 10^{-13}$ &
+		$4.2\cdot 10^{-12}$ &
+		$3.4\cdot 10^{-11}$ &
+		$3.8\cdot 10^{-10}$ &
+		$2.4\cdot 10^{-8}$ \\
+	    \hline	
+	\end{tabular}
+	\label{tab:results}
+\end{center}
+\end{table}
+
+Из таблицы \ref{tab:results} видно, что при уменьшении параметра $p$ значения элементов матрицы $R$ увеличиваются, и, следовательно, ее норма растет. Выясним, сохраняется ли тенденция при еще меньших значениях параметра $p$. Для этого будем изменить $p$ в диапазоне $10^{-14}~\div~1$. Полученный график изменения нормы матрицы $R$ в зависимости от параметра $p$ в логарифмической шкале изображен на рисунке \ref{fig:p}. Из графика видно, что значение $||R||$ практически линейно зависит от параметра $p$.
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tikzpicture} [every plot/.append style={thick}]
+		\begin{axis}[
+			height=0.4\textheight,
+			width=0.9\textwidth,
+			legend pos=north east,
+			xlabel={$\lg p$},
+			ylabel={$\lg ||R||$},
+			xlabel near ticks,
+			ylabel near ticks,
+			xmode=log,
+			log basis x=10,
+			xmin=1e-16,
+			xmax=1e2,
+			xtick={1e-14, 1e-12, 1e-10, 1e-8, 1e-6, 1e-4, 1e-2, 1e0},
+			ymode=log,
+			log basis y=10,
+			ymin=1e-16,
+			ymax=1e4,
+			grid=major
+		]
+		\addplot table[x=p,y=norm_r,col sep=comma]{data/p.csv};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость $||R||$ от $p$ в логарифмической шкале}
+	\label{fig:p}
+\end{center}
+\end{figure}
+
+
+
 \section{Выводы}
 
+Таким образом можно сделать вывод, что даже при очень небольшом измениии матрицы $A$, значения обратной матрицы $A^{-1}$ увеличиваются на порядок, что ведет к снижению точности и увеличению значений матрицы $R = A\cdot A^{-1} - E$ и ее нормы.
+
+\newpage
+
 \section*{Приложение}
+
+\captionof{lstlisting}{main.cpp}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:main
+]{main.cpp}
+\parindent=1cm
+
+\captionof{lstlisting}{matrix.h}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:matrix
+]{matrix.h}
+\parindent=1cm
 
 \end{document}
