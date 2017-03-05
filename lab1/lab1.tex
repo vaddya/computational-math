@@ -35,71 +35,205 @@
 
 \subsection{Вычисление $\int L(x)dx$}
 
-\makeatletter
-\def\lst@PlaceNumber{\llap{\normalfont
-                \lst@numberstyle{\the\lst@lineno}\kern\lst@numbersep}}
-\makeatother
-
-Для вычисления значения полинома Лагранжа в некоторой точке будем использовать подпрограмму \texttt{lagrange}:
-
-\captionof{lstlisting}{main.cpp. Функция, вычисляющая значение полинома Лагранжа 10-ой степени в точке $x_0$}
-\lstinputlisting[linerange={21-23}]{code/main_no_comments.cpp}
-\parindent=1cm
-
-Для вычисления интеграла $\int_0^3 L(x)dx$ будет использовать подпрограмму \texttt{quanc8}:
-
-\captionof{lstlisting}{main.cpp. Параметры подпрограммы \texttt{quanc8}}
-\lstinputlisting[linerange={54-60}]{code/main_no_comments.cpp}
-\parindent=1cm
-
-\captionof{lstlisting}{main.cpp. Вызов подпрограммы \texttt{quanc8}}
-\lstinputlisting[linerange={64-65}]{code/main_no_comments.cpp}
-\parindent=1cm
+Для вычисления значения полинома Лагранжа в некоторой точке будем использовать подпрограмму \textbf{LAGRANGE}. Для вычисления интеграла $\int_0^3 L(x)dx$ будет использовать подпрограмму \textbf{quanc8} (см. листинг \ref{code:main}).
 
 \subsection{Вычисление $\int S(x)dx$}
 
-Для вычисления значения сплайн функции в некоторой точке будем использовать подпрограммы \texttt{spline} для нахождения векторов \texttt{B, C, D} и \texttt{seval} для вычисления значения сплайн функции:
+Для вычисления значения сплайн функции в некоторой точке будем использовать подпрограммы \textbf{SPLINE} для нахождения векторов \textbf{B, C, D} и \textbf{SEVAL} для вычисления значения сплайн функции. Для вычисления интеграла $\int_0^3 S(x)dx$ будем использовать подпрограмму \textbf{QUANC8} (см. листинг \ref{code:main}).
 
-\captionof{lstlisting}{main.cpp. Функция, вычисляющая значение сплайн функции в точке $x_0$}
-\lstinputlisting[linerange={26-38}]{code/main_no_comments.cpp}
-\parindent=1cm
+\section{Выполнение работы}
 
-Для вычисления интеграла $\int_0^3 S(x)dx$ будем использовать подпрограмму \texttt{quanc8}:
+На рисунке \ref{fig:res} показан результат выполнения программы при $ABSERR = 10^{-14}$. В таблице в первом столбце указаны значения независимой переменной (между узлами интерполяции), во втором -- значения исходной функции, в третьем -- значения полинома Лагранжа, а в последнем -- значения сплайн функции.
 
-\captionof{lstlisting}{main.cpp. Параметры подпрограммы \texttt{quanc8}}
-\lstinputlisting[linerange={54-60}]{code/main_no_comments.cpp}
-\parindent=1cm
-
-\captionof{lstlisting}{main.cpp. Вызов подпрограммы \texttt{quanc8}}
-\lstinputlisting[linerange={66-67}]{code/main_no_comments.cpp}
-\parindent=1cm
-
-\section{Результаты}
-
-На рисунке \ref{fig:res} показан результат выполнения программы. В таблице в первом столбце указаны значения независимой переменной (причем для проверки помимо заданных $x_k$ указаны и промежуточные значения), во втором -- значения исходной функции, в третьем -- значения полинома Лагранжа, а в последнем -- значения сплайн функции.
-
-После таблицы приведены значения трех интегралов, вычисленные при помощи подпрограммы \texttt{quanc8}: $\int_0^3 f(x)dx$, $\int_0^3 L(x)dx$ и $\int_0^3 S(x)dx$. Можно заметить, что значения интеграла от исходной функции, вычсиленное аналитически, и значение интеграла, вычисленное с использованием подпрограммы \texttt{quanc8}, совпадают.
+После таблицы приведены значения трех интегралов, вычисленные при помощи подпрограммы \textbf{QUANC8}: $\int_0^3 f(x)dx$, $\int_0^3 L(x)dx$ и $\int_0^3 S(x)dx$. Можно заметить, что значения интеграла от исходной функции, вычсиленное аналитически, и значение интеграла, вычисленное с использованием подпрограммы \textbf{QUANC8}, совпадают.
 
 В качестве вспомогательной информации приведены разности между интегралом от исходной функции и интегралом от полинома Лагранжа и сплайн функции.
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[width=0.95\textwidth]{screen_inversed}
-	\caption{Результат выполнения программы}
+	\includegraphics[width=0.58\textwidth]{output}
+	\caption{Результат выполнения программы при $ABSERR = 10^{-14}$}
 	\label{fig:res}
+\end{center}
+\end{figure}
+
+\vspace{-1cm}
+
+\section{Результаты}
+
+Исследуем влияние значения $ABSERR$ на вычисление интеграла с помощью подпрограммы \textbf{QUANC8}. На рисунке \ref{fig:nofun} изображена зависимость количества вычислений функции в подпрограмме от значения абсолютной погрешности. Из графика видно, что при $ABSERR \approx 10^{-20}$ происходит сильное увеличение количества вычислений при расчете всех трех интегралов, а следовательно понижается производительность подпрограммы.
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tikzpicture} [every plot/.append style={thick}]
+		\begin{axis}[
+			height=0.35\textheight,
+			width=0.85\textwidth,
+			legend pos=north east,
+			xlabel={$\lg ABSERR$},
+			ylabel={$NOFUN$},
+			xlabel near ticks,
+			ylabel near ticks,
+			xmax=10e2,
+			xmin=10e-37,
+			ymax=5e3,
+			ymin=-500,
+			xmode=log,
+			log basis x=10,
+			grid=major
+		]
+		\addplot table[x=abserr,y=nofun,col sep=comma]{data/f.csv};
+		\addplot table[x=abserr,y=nofun,col sep=comma]{data/f-l.csv};
+		\addplot table[x=abserr,y=nofun,col sep=comma]{data/f-s.csv};
+		\legend{QUANC8(f(x)), QUANC8(L(x)), QUANC8(S(x))}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость количества вычислений функции в подпрограмме \textbf{QUANC8} от абсолютной погрешности}
+	\label{fig:nofun}
+\end{center}
+\end{figure}
+
+На рисунке \ref{fig:f-l} изображена зависимость разности $\left| f(x) - L(x) \right|$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8}. Пунктирной линией на графике отмечено знанчение $ABSERR = 10^{-20}$, при котором значение $FLAG$ становится ненулевым, т.е. при значениях меньше которого подпрограмма не завершается корректно. На рисунке \ref{fig:errest-l} изображена зависимость оценочной погрешности от абсолютной погрешности. Из графика видно, что $ABSERR \le 10^{-14}$ оценочная погрешность близка к нулю.
+
+\vspace{-0.5cm}
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tikzpicture} [every plot/.append style={thick}]
+		\begin{axis}[
+			height=0.34\textheight,
+			width=0.85\textwidth,
+			legend pos=north east,
+			xlabel={$\lg ABSERR$},
+			ylabel={$\left| f(x) - L(x) \right|$},
+			xlabel near ticks,
+			ylabel near ticks,
+			xmax=10e2,
+			xmin=10e-37,
+			ymax=1.521965e-10,
+			ymin=1.521936e-10,
+			xmode=log,
+			log basis x=10,
+			grid=major,
+			yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=6},
+		]
+		\addplot table[x=abserr,y=f-l,col sep=comma]{data/f-l.csv};
+		\addplot +[mark=none, dashed, black, samples=2] coordinates {(1e-20,1.521935e-10) (1e-20,1.521965e-10)};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость разности $\left| f(x) - L(x) \right|$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8}}
+	\label{fig:f-l}
+\end{center}
+\end{figure}
+
+\vspace{-1.4cm}
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tikzpicture} [every plot/.append style={thick}]
+		\begin{axis}[
+			height=0.34\textheight,
+			width=0.85\textwidth,
+			legend pos=north east,
+			xlabel={$\lg ABSERR$},
+			ylabel={$ERREST$},
+			xlabel near ticks,
+			ylabel near ticks,
+			xmax=10e2,
+			xmin=10e-37,
+			ymax=2.5e-14,
+			ymin=-0.49e-14,
+			xmode=log,
+			log basis x=10,
+			grid=major,
+			yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+		]
+		\addplot table[x=abserr,y=errest,col sep=comma]{data/f-l.csv};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость оценочной погрешности $ERREST$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8} при вычислении интеграла от полинома Лагранжа}
+	\label{fig:errest-l}
+\end{center}
+\end{figure}
+
+На рисунке \ref{fig:f-s} изображена зависимость разности $\left| f(x) - S(x) \right|$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8}. Из графика видно, что при $ABSERR \approx 10^{-7}$ происходит резкое увеличение разности меджу интегралом от исходной функции и интегралом от сплайн-функции. На рисунке \ref{fig:errest-s} изображена зависимость оценочной погрешности от абсолютной погрешности. Из графика видно, что $ABSERR \le 10^{-8}$ оценочная погрешность близка к нулю.
+
+\vspace{-0.5cm}
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tikzpicture} [every plot/.append style={thick}]
+		\begin{axis}[
+			height=0.34\textheight,
+			width=0.85\textwidth,
+			legend pos=north east,
+			xlabel={$\lg ABSERR$},
+			ylabel={$\left| f(x) - S(x) \right|$},
+			xlabel near ticks,
+			ylabel near ticks,
+			xmax=10e2,
+			xmin=10e-37,
+			ymax=4.2e-4,
+			ymin=4.061e-4,
+			xmode=log,
+			log basis x=10,
+			grid=major,
+			yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+		]
+		\addplot table[x=abserr,y=f-s,col sep=comma]{data/f-s.csv};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость разности $\left| f(x) - S(x) \right|$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8}}
+	\label{fig:f-s}
+\end{center}
+\end{figure}
+
+\vspace{-1.5cm}
+
+\begin{figure}[H]
+\begin{center}
+	\begin{tikzpicture} [every plot/.append style={thick}]
+		\begin{axis}[
+			height=0.34\textheight,
+			width=0.85\textwidth,
+			legend pos=north east,
+			xlabel={$\lg ABSERR$},
+			ylabel={$ERREST$},
+			xlabel near ticks,
+			ylabel near ticks,
+			xmax=10e2,
+			xmin=10e-37,
+			ymax=2e-7,
+			ymin=-0.49e-7,
+			xmode=log,
+			log basis x=10,
+			grid=major,
+			yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+		]
+		\addplot table[x=abserr,y=errest,col sep=comma]{data/f-s.csv};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость оценочной погрешности $ERREST$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8} при вычислении интеграла от сплайн-функции}
+	\label{fig:errest-s}
 \end{center}
 \end{figure}
 
 \section{Выводы}
 
-По полученным результатам можно сделать вывод, что в данном случае лучше использовать полином Лагрнджа для приближенного вычисления интеграла $\int_0^3 f(x)dx$.
+По полученным результатам вычисления интеграла $\int_0^3 f(x)dx$ можно сделать вывод, что в данном случае для его приближенного вычисления с использование подпрограммы \textbf{QUANC8} лучше использовать интерполяционный полином Лагрнджа. 
 
-\newpage
+Помимо этого, на графиках \ref{fig:nofun}, \ref{fig:f-l} и \ref{fig:f-s} прослеживается закономерность: при задании меньшей абсолютной погрешности, подпрограмма выдает менее точный результат, если сравнивать его с аналитическим значением интеграла, используя при этом большее количество вычислений функции. При этом из графиков \ref{fig:errest-l} и \ref{fig:errest-s} видно, что оценочная погрешность близка к нулю при абсолютной погрешности меньшей или равной, чем $10^{-14}$ и $10^{-8}$ для полинома Лагранжа и сплайн-функции соответственно.
+
+Таким образом, можно сделать вывод, что оптимальное значение абсолютной погрешности $ABSERR$ примерно равно $10^{-14}$ для полинома Лагрнжа и $10^{-8}$ для сплайн-функции, потому как большие значения приведут к увеличению оценочной погрешности, а уменьшение не даст более точное значение, только увеличит количество вычислений функции и может привести к некорректному завершению подпрограммы. 
 
 \section*{Приложение}
 
 \captionof{lstlisting}{main.cpp}
-\lstinputlisting{code/main.cpp}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:main
+]{main.cpp}
 \parindent=1cm
 
 \end{document}

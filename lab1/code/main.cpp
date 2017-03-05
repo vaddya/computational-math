@@ -6,23 +6,20 @@
 
 using namespace std;
 
-const int POINTS_NUM = 11; // количество узлов интерполяции
+const int POINTS_NUM = 11;
 
-double x[POINTS_NUM] = {}; // узлы интерполяции
-double x_inter[POINTS_NUM] = {}; // промежуточные узлы
-double f[POINTS_NUM] = {}; // значения функции в узлах
+double x[POINTS_NUM] = {};
+double x_inter[POINTS_NUM] = {};
+double f[POINTS_NUM] = {};
 
-// Вычисление значения исходной фукнции в точке x0
 double function(double x0) {
     return 1 - exp(-x0);
 }
 
-// Вычисление значения полинома Лагрнаджа в точке x0
 double lagrange(double x0) {
     return lagrange(POINTS_NUM - 1, x, f, x0);
 }
 
-// Вычисление значения сплайн фукнции в точке x0
 double spline(double x0) {
     double b[POINTS_NUM] = {};
     double c[POINTS_NUM] = {};
@@ -44,33 +41,48 @@ int main() {
         f[i] = function(x[i]);
     }
 
+    /*
     printf("%4s %16s %16s %16s\n", "x", "f(x)", "l(x)", "s(x)");
     for (int i = 0; i < POINTS_NUM; i++) {
         printf("%4.2f %16.12f %16.12f %16.12f\n", x[i], function(x[i]), lagrange(x[i]), spline(x[i]));
         printf("%4.2f %16.12f %16.12f %16.12f\n", x_inter[i], function(x_inter[i]), lagrange(x_inter[i]),
                spline(x_inter[i]));
     }
+    */
 
-    double a = 0.0; // нижний предел интегрирования
-    double b = 3.0; // верхний предел интегрирования
-    double abserr = 1.0E-14; // абсолютная погрешность
-    double relerr = 0; // относительная погрешности
-    double errest; // реальная погрешность
-    int nofun; // количество внутренних вычислений функции
-    double flag; // индикатор надёжности
+    cout << "abserr, f-l, errest, nofun, flag" << endl;
+    cout << "abserr, f-s, errest, nofun, flag" << endl;
 
-    double int_fun; // Значение интеграла от заданной функции
-    quanc8(function, a, b, abserr, relerr, &int_fun, &errest, &nofun, &flag);
-    double int_lagrange; // Значение интеграла от полинома Лагранджа
-    quanc8(lagrange, a, b, abserr, relerr, &int_lagrange, &errest, &nofun, &flag);
-    double int_spline; // Значение интеграла от сплайн функции
-    quanc8(spline, a, b, abserr, relerr, &int_spline, &errest, &nofun, &flag);
+    for (int i = 0; i < 35; i++) {
+        double a = 0.0;
+        double b = 3.0;
+        double abserr = pow(10, (double) -i);
+        double relerr = 0;
+        double errest;
+        int nofun;
+        double flag;
 
-    printf("\n%16s %18s %18s\n", "quanc8{f(x)}", "quanc8{l(x)}", "quanc8{s(x)}");
-    printf("%16.14f %18.14f %18.14f\n", int_fun, int_lagrange, int_spline);
+        double int_fun;
+        quanc8(function, a, b, abserr, relerr, &int_fun, &errest, &nofun, &flag);
+        double int_lagrange;
+        quanc8(lagrange, a, b, abserr, relerr, &int_lagrange, &errest, &nofun, &flag);
+        double int_spline;
+        quanc8(spline, a, b, abserr, relerr, &int_spline, &errest, &nofun, &flag);
 
-    printf("\n|quanc8{f(x)} - quanc8{l(x)}| = %.14f\n", fabs(int_fun - int_lagrange));
-    printf("|quanc8{f(x)} - quanc8{s(x)}| = %.14f\n\n", fabs(int_fun - int_spline));
+        cout << abserr << ", "
+             << fabs(int_fun - int_lagrange) << ", "
+             << fabs(int_fun - int_spline) << ", "
+             << errest << ", "
+             << nofun << ", "
+             << flag << endl;
 
+        /*
+        printf("\n%16s %18s %18s\n", "quanc8{f(x)}", "quanc8{l(x)}", "quanc8{s(x)}");
+        printf("%16.14f %18.14f %18.14f\n", int_fun, int_lagrange, int_spline);
+
+        printf("\n|quanc8{f(x)} - quanc8{l(x)}| = %.14f\n", fabs(int_fun - int_lagrange));
+        printf("|quanc8{f(x)} - quanc8{s(x)}| = %.14f\n\n", fabs(int_fun - int_spline));
+        */
+    }
     return 0;
 }
