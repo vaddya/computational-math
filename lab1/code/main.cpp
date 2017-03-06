@@ -1,16 +1,4 @@
-﻿#include <iostream>
-#include <cmath>
-#include "lagrange.h"
-#include "quanc8.h"
-#include "SPLINES.h"
-
-using namespace std;
-
-const int POINTS_NUM = 11;
-
-double x[POINTS_NUM] = {};
-double x_inter[POINTS_NUM] = {};
-double f[POINTS_NUM] = {};
+﻿#include "main.h"
 
 double function(double x0) {
     return 1 - exp(-x0);
@@ -36,22 +24,61 @@ double spline(double x0) {
 
 int main() {
     for (int i = 0; i < POINTS_NUM; i++) {
-        x[i] = 0.3 * i;
-        x_inter[i] = x[i] + 0.15;
+        x[i] = POINTS_STEP * i;
+        x_inter[i] = x[i] + POINTS_STEP / 2;
         f[i] = function(x[i]);
     }
+    doTask(14); // precision
+    doResearch(LAGRANGE); // FUNCTION or LAGRANGE or SPLINE
+    return 0;
+}
 
-    /*
-    printf("%4s %16s %16s %16s\n", "x", "f(x)", "l(x)", "s(x)");
+void doTask(int precision) {
+    cout << fixed
+         << setw(4) << "x"
+         << setw(precision + 5) << "f(x)"
+         << setw(precision + 5) << "L(x)"
+         << setw(precision + 5) << "S(x)" << endl;
+
     for (int i = 0; i < POINTS_NUM; i++) {
-        printf("%4.2f %16.12f %16.12f %16.12f\n", x[i], function(x[i]), lagrange(x[i]), spline(x[i]));
-        printf("%4.2f %16.12f %16.12f %16.12f\n", x_inter[i], function(x_inter[i]), lagrange(x_inter[i]),
-               spline(x_inter[i]));
+        cout << setprecision(2) << setw(4) << x_inter[i]
+             << setprecision(precision) << setw(precision + 5) << function(x_inter[i])
+             << setw(precision + 5) << lagrange(x_inter[i])
+             << setw(precision + 5) << spline(x_inter[i]) << endl;
     }
-    */
 
-    cout << "abserr, f-l, errest, nofun, flag" << endl;
-    cout << "abserr, f-s, errest, nofun, flag" << endl;
+    double a = 0.0;
+    double b = 3.0;
+    double abserr = 1e-14;
+    double relerr = 0;
+    double errest;
+    int nofun;
+    double flag;
+
+    double int_fun;
+    quanc8(function, a, b, abserr, relerr, &int_fun, &errest, &nofun, &flag);
+    double int_lagrange;
+    quanc8(lagrange, a, b, abserr, relerr, &int_lagrange, &errest, &nofun, &flag);
+    double int_spline;
+    quanc8(spline, a, b, abserr, relerr, &int_spline, &errest, &nofun, &flag);
+
+    cout << endl
+         << setw(precision + 4) << "quanc8{f(x)}"
+         << setw(precision + 4) << "quanc8{L(x)}"
+         << setw(precision + 4) << "quanc8{S(x)}" << endl
+         << setw(precision + 4) << int_fun
+         << setw(precision + 4) << int_lagrange
+         << setw(precision + 4) << int_spline << endl;
+
+    cout << endl
+         << "|quanc8{f(x)} - quanc8{L(x)}| = " << fabs(int_fun - int_lagrange) << endl
+         << "|quanc8{f(x)} - quanc8{S(x)}| = " << fabs(int_fun - int_spline) << endl << endl;
+}
+
+void doResearch(Mode mode) {
+    if (mode == FUNCTION) cout << "f(x)\nabserr, esterr, nofun, flag" << endl;
+    if (mode == LAGRANGE) cout << "L(x)\nabserr, f-l, errest, nofun, flag" << endl;
+    if (mode == SPLINE) cout << "S(x)\nabserr, f-s, errest, nofun, flag" << endl;
 
     for (int i = 0; i < 35; i++) {
         double a = 0.0;
@@ -62,27 +89,19 @@ int main() {
         int nofun;
         double flag;
 
-        double int_fun;
+        double int_fun = 0;
         quanc8(function, a, b, abserr, relerr, &int_fun, &errest, &nofun, &flag);
-        double int_lagrange;
-        quanc8(lagrange, a, b, abserr, relerr, &int_lagrange, &errest, &nofun, &flag);
-        double int_spline;
-        quanc8(spline, a, b, abserr, relerr, &int_spline, &errest, &nofun, &flag);
+        double int_lagrange = 0;
+        if (mode == LAGRANGE) quanc8(lagrange, a, b, abserr, relerr, &int_lagrange, &errest, &nofun, &flag);
+        double int_spline = 0;
+        if (mode == SPLINE) quanc8(spline, a, b, abserr, relerr, &int_spline, &errest, &nofun, &flag);
 
-        cout << abserr << ", "
-             << fabs(int_fun - int_lagrange) << ", "
-             << fabs(int_fun - int_spline) << ", "
-             << errest << ", "
+        cout << defaultfloat << setprecision(6)
+             << abserr << ", ";
+        if (mode == LAGRANGE)cout << fabs(int_fun - int_lagrange) << ", ";
+        if (mode == SPLINE) cout << fabs(int_fun - int_spline) << ", ";
+        cout << errest << ", "
              << nofun << ", "
              << flag << endl;
-
-        /*
-        printf("\n%16s %18s %18s\n", "quanc8{f(x)}", "quanc8{l(x)}", "quanc8{s(x)}");
-        printf("%16.14f %18.14f %18.14f\n", int_fun, int_lagrange, int_spline);
-
-        printf("\n|quanc8{f(x)} - quanc8{l(x)}| = %.14f\n", fabs(int_fun - int_lagrange));
-        printf("|quanc8{f(x)} - quanc8{s(x)}| = %.14f\n\n", fabs(int_fun - int_spline));
-        */
     }
-    return 0;
 }

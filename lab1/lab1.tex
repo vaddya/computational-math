@@ -35,11 +35,11 @@
 
 \subsection{Вычисление $\int L(x)dx$}
 
-Для вычисления значения полинома Лагранжа в некоторой точке будем использовать подпрограмму \textbf{LAGRANGE}. Для вычисления интеграла $\int_0^3 L(x)dx$ будет использовать подпрограмму \textbf{quanc8} (см. листинг \ref{code:main}).
+Для вычисления значения полинома Лагранжа в некоторой точке будем использовать подпрограмму \textbf{LAGRANGE}. Для вычисления интеграла $\int_0^3 L(x)dx$ будет использовать подпрограмму \textbf{quanc8} (см. листинги \ref{code:mainh} и \ref{code:maincpp}).
 
 \subsection{Вычисление $\int S(x)dx$}
 
-Для вычисления значения сплайн функции в некоторой точке будем использовать подпрограммы \textbf{SPLINE} для нахождения векторов \textbf{B, C, D} и \textbf{SEVAL} для вычисления значения сплайн функции. Для вычисления интеграла $\int_0^3 S(x)dx$ будем использовать подпрограмму \textbf{QUANC8} (см. листинг \ref{code:main}).
+Для вычисления значения сплайн функции в некоторой точке будем использовать подпрограммы \textbf{SPLINE} для нахождения векторов \textbf{B, C, D} и \textbf{SEVAL} для вычисления значения сплайн функции. Для вычисления интеграла $\int_0^3 S(x)dx$ будем использовать подпрограмму \textbf{QUANC8} (см. листинги \ref{code:mainh} и \ref{code:maincpp}).
 
 \section{Выполнение работы}
 
@@ -51,7 +51,7 @@
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[width=0.58\textwidth]{output}
+	\includegraphics[width=0.62\textwidth]{output}
 	\caption{Результат выполнения программы при $ABSERR = 10^{-14}$}
 	\label{fig:res}
 \end{center}
@@ -93,6 +93,8 @@
 \end{center}
 \end{figure}
 
+\newpage
+
 На рисунке \ref{fig:f-l} изображена зависимость разности $\left| \int_0^3f(x)dx - \int_0^3L(x)dx \right|$ от задаваемой абсолютной погрешности подпрограммы \textbf{QUANC8}. На рисунке \ref{fig:errest-l} изображена зависимость оценочной погрешности от абсолютной погрешности. Из графика видно, что $ABSERR \le 10^{-14}$ оценочная погрешность близка к нулю. Пунктирной линией на графиках отмечено знанчение $ABSERR = 10^{-21}$, начиная с которого значение $FLAG$ становится ненулевым, т.е. при значениях меньше которого подпрограмма не завершается корректно.
 
 \vspace{-0.5cm}
@@ -126,7 +128,7 @@
 \end{center}
 \end{figure}
 
-\vspace{-1.4cm}
+\vspace{-1.2cm}
 
 \begin{figure}[H]
 \begin{center}
@@ -236,12 +238,20 @@
 
 \section*{Приложение}
 
+\captionof{lstlisting}{main.h}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:mainh
+]{main.h}
+
+\newpage
+
 \captionof{lstlisting}{main.cpp}
 \lstinputlisting[
 	basicstyle=\scriptsize,	
 	numberstyle=\scriptsize,
-	label=code:main
+	label=code:maincpp
 ]{main.cpp}
-\parindent=1cm
 
 \end{document}

@@ -40,11 +40,11 @@
 
 \section{Выполнение работы}
 
-В процессе работы была разработана программа на языке \textbf{C++}, вычисляющая искомую матрицу $R$ (см.~листинг~\ref{code:main}). Для упрощения взаимодействия с матрицами был разработан класс \textbf{Matrix} (см.~листинг~\ref{code:matrix}). Для нахождения обратной матрицы использовались подпрограммы \textbf{DECOMP} и \textbf{SOLVE}. На рисунках \ref{fig:p1} -- \ref{fig:p5} изображен вывод программы для заданных значений параметра $p$.
+В процессе работы была разработана программа на языке \textbf{C++}, вычисляющая искомую матрицу $R$ (см.~листинги~\ref{code:mainh} и \ref{code:maincpp}). Для упрощения взаимодействия с матрицами был разработан класс \textbf{Matrix} (см.~листинг~\ref{code:matrix}). Для нахождения обратной матрицы использовались подпрограммы \textbf{DECOMP} и \textbf{SOLVE}. На рисунках \ref{fig:p1} -- \ref{fig:p5} изображен вывод программы при заданных значений параметра $p$.
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.88]{1}
+	\includegraphics[scale=0.92]{1}
 	\caption{Вывод программы при $p = 1$}
 	\label{fig:p1}
 \end{center}
@@ -54,7 +54,7 @@
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.88]{2}
+	\includegraphics[scale=0.92]{2}
 	\caption{Вывод программы при $p = 0.1$}
 	\label{fig:p2}
 \end{center}
@@ -64,7 +64,7 @@
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.88]{3}
+	\includegraphics[scale=0.92]{3}
 	\caption{Вывод программы при $p = 0.01$}
 	\label{fig:p3}
 \end{center}
@@ -74,7 +74,7 @@
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.88]{4}
+	\includegraphics[scale=0.92]{4}
 	\caption{Вывод программы при $p = 0.001$}
 	\label{fig:p4}
 \end{center}
@@ -84,7 +84,7 @@
 
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[scale=0.88]{5}
+	\includegraphics[scale=0.92]{5}
 	\caption{Вывод программы при $p = 0.00001$}
 	\label{fig:p5}
 \end{center}
@@ -161,20 +161,25 @@
 
 \section*{Приложение}
 
-\captionof{lstlisting}{main.cpp}
-\lstinputlisting[
-	basicstyle=\scriptsize,	
-	numberstyle=\scriptsize,
-	label=code:main
-]{main.cpp}
-\parindent=1cm
-
 \captionof{lstlisting}{matrix.h}
 \lstinputlisting[
 	basicstyle=\scriptsize,	
 	numberstyle=\scriptsize,
 	label=code:matrix
 ]{matrix.h}
-\parindent=1cm
+
+\captionof{lstlisting}{main.h}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:mainh
+]{main.h}
+
+\captionof{lstlisting}{main.cpp}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:maincpp
+]{main.cpp}
 
 \end{document}

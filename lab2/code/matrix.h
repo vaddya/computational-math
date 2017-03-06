@@ -56,9 +56,9 @@ namespace matrix {
 
         T norm() const {
             T max = 0;
-            for (int i = 0; i < rows(); i++) {
+            for (int i = 0; i < rows(); ++i) {
                 T sum = 0;
-                for (int j = 0; j < cols(); j++) {
+                for (int j = 0; j < cols(); ++j) {
                     sum += abs(values[i][j]);
                 }
                 max = sum > max ? sum : max;
@@ -174,6 +174,6 @@ namespace matrix {
         }
         return res;
     }
-
 }
+
 #endif
