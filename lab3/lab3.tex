@@ -1,0 +1,57 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Техническое задание}
+
+\textbf{Вариант 5:} Привесети дифференциальное уравнение к системе двух дифференциальных уравнений первого порядка. Решить с шагом $h = 0.1$:
+\begin{enumerate}
+\item Используя подпрограмму \textbf{RKF45};
+\item Используя усовершенствованный метод ломанных Эйлера.
+\end{enumerate}
+Сравнить результаты, полученные двумя методами, с точным решением.
+
+\section{Исходные данные}
+
+Дифференциальное уравнение:
+\[
+t^2\cdot y'' - 12y = 0
+\]
+
+Начальные условия:
+\begin{center}
+\begin{multicols}{3} 
+	$\left. y \right|_{t=1} = 1;$ \\
+	$\left. y' \right|_{t=1} = 4;$ \\
+	$1 \le t \le 2$
+\end{multicols}
+\end{center}
+
+Точное решение:
+\[
+y(t) = t^4
+\]
+
+\section{Выполнение работы}
+
+\section{Результаты}
+
+\section*{Приложение}
+
+\captionof{lstlisting}{main.h}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:mainh
+]{main.h}
+
+\captionof{lstlisting}{main.cpp}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:maincpp
+]{main.cpp}
+
+\end{document}
