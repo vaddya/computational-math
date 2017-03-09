@@ -1,0 +1,78 @@
+\include{settings}
+
+\begin{document}
+
+\include{titlepage}
+
+\section{Техническое задание}
+
+\textbf{Задание К-3-08:} Дана консольная балка с переменным поперечным сечением, показанная на рисунке \ref{img:balka}.
+
+Дифференциальное уравнение для вертикального прогиба имеет вид:
+\[
+\frac{d^4y}{dx^4} = - \frac{2}{I} \frac{dI}{dx}\cdot \frac{d^3y}{dx^3} -  \frac{1}{I} \frac{d^2I}{dx^2}\cdot \frac{d^2y}{dx^2} + \frac{\omega}{EI},
+\]
+где $x$ -- горизонтальное расстояние вдоль балки, $y$ -- вертикальный прогиб, $l$ -- длина балки, $M$ -- изгибающий момент, $E$ -- модуль Юнга, $I$ -- момент инерции, $P$ -- нагрузка на балку.
+
+\begin{center}
+\begin{multicols}{2}
+$\omega = - \frac{d^2M}{dx^2}$
+
+$M(x) = -P \cdot (l - x)$
+\end{multicols}
+\end{center}
+
+\begin{center}
+\begin{multicols}{2}
+$E = 3\cdot 10^7$
+
+$I(x) = 5 \cdot (1 + 4 e^{-\frac{6x}{l}})$
+\end{multicols}
+\end{center}
+
+Начальные условия:
+\begin{center}
+\begin{multicols}{3}
+$y(0) = y'(0) = 0$
+
+$y''(0) = \frac{Pl}{75}\cdot 10^{-7}$
+
+$y'''(0) = \frac{P \cdot 3.8}{75}\cdot 10^{-7}$
+\end{multicols}
+\end{center}
+
+Вычислить $y(l)$ для различных значений $P$. Построить сплайн по значениям $y(l)$ в зависимости от $P$ и с его помощью оценить $y(l)$ для $P_0$. 
+
+Оценить погрешность результата и влияние на точность погрешности исходных данных.
+
+\section{Исходные данные}
+
+Значения нагрузки на балку: $500 \le P \le 1000$ с шагом $100$, $P_0 = 750$.
+
+Значения длины балки: $l = 50\cdot x^*$, где $x^*$ -- корень уравнения \ref{eq:int} на промежутке $[1, 4]$.
+
+\begin{equation}\label{eq:int}
+\int_0^{20} \frac{e^{-0.9z}}{z+x}dz = 0.1957981\cdot x
+\end{equation}
+
+\section{Выполнение работы}
+
+\section{Результаты}
+
+\section*{Приложение}
+
+\captionof{lstlisting}{main.h}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:mainh
+]{main.h}
+
+\captionof{lstlisting}{main.cpp}
+\lstinputlisting[
+	basicstyle=\scriptsize,	
+	numberstyle=\scriptsize,
+	label=code:maincpp
+]{main.cpp}
+
+\end{document}
