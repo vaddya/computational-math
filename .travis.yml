@@ -15,6 +15,7 @@ matrix:
     - env: LAB="lab1"
     - env: LAB="lab2"
     - env: LAB="lab3"
+    - env: LAB="coursework"
 
 script:
   - docker run -v $TRAVIS_BUILD_DIR:/computational-math lamtev/latex:full /bin/bash -c " cd computational-math/${LAB} && pdflatex ${LAB}.tex && pdflatex ${LAB}.tex "
