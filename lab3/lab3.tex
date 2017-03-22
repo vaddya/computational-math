@@ -36,22 +36,41 @@ y(t) = t^4
 
 \section{Выполнение работы}
 
+Приведем исходное дифференциальное с помощью подстановок $x_1(t) = y(t)$ и $x_2(t) = y'(t)$ к системе:
+
+\[
+\begin{pmatrix}
+    x'_1(t) \\
+    x'_2(t) \\
+\end{pmatrix}
+  =
+\begin{pmatrix}
+    0 & 1 \\
+    \frac{12}{t^2} & 0 \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+    x_1(t) \\
+    x_2(t) \\
+\end{pmatrix}
+\]
+
 \section{Результаты}
 
 \section*{Приложение}
 
-\captionof{lstlisting}{main.h}
-\lstinputlisting[
-	basicstyle=\scriptsize,	
-	numberstyle=\scriptsize,
-	label=code:mainh
-]{main.h}
-
-\captionof{lstlisting}{main.cpp}
-\lstinputlisting[
-	basicstyle=\scriptsize,	
-	numberstyle=\scriptsize,
-	label=code:maincpp
-]{main.cpp}
+%\captionof{lstlisting}{main.h}
+%\lstinputlisting[
+%	basicstyle=\scriptsize,	
+%	numberstyle=\scriptsize,
+%	label=code:mainh
+%]{main.h}
+%
+%\captionof{lstlisting}{main.cpp}
+%\lstinputlisting[
+%	basicstyle=\scriptsize,	
+%	numberstyle=\scriptsize,
+%	label=code:maincpp
+%]{main.cpp}
 
 \end{document}
