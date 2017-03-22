@@ -9,6 +9,12 @@
 
 using namespace std;
 
+const int N = 2;
+const double START = 1.0;
+const double END = 2.0;
+const double STEP = 0.1;
+const int POINTS = (const int) ((END - START) / STEP + 1);
+
 int main();
 
 double **evalExact(int n, int points);
@@ -22,5 +28,7 @@ void fun(double t, double *x, double *dx);
 double getStep(int i);
 
 void printTable(string table, double **values, int n, int points);
+
+void printCsv(string table, string cols, double **values, int n, int points);
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef LAB3_IMPROVEDEULER_H
 #define LAB3_IMPROVEDEULER_H
 
-typedef void (*Fun)(double TT, double *X, double *DX);
+typedef void (*Fun)(double t, double *x, double *dx);
 
-double **impEulerMethod(Fun fun, int n, double *x, double t, double tout, double step);
+void impEuler(Fun fun, int n, double *x, double t, double h);
 
-#endif //LAB3_IMPROVEDEULER_H
+#endif

@@ -1,16 +1,28 @@
 #include "main.h"
 
-const int N = 2;
-const double START = 1.0;
-const double END = 2.0;
-const double STEP = 0.1;
-const int POINTS = (const int) ((END - START) / STEP + 1);
-
 int main() {
-    printTable("EXACT", evalExact(N, POINTS), N, POINTS);
-    printTable("RKF45", evalRkf45(N, POINTS), N, POINTS);
-    printTable("RKF45", evalImpEuler(N, POINTS, STEP), N, POINTS);
+    double **exact = evalExact(N, POINTS);
+    double **rkf = evalRkf45(N, POINTS);
+    double **euler = evalImpEuler(N, POINTS, STEP);
+    double **error = new double *[POINTS];
+    for (int i = 0; i < POINTS; i++) {
+        error[i] = new double[N];
+        for (int j = 0; j < N; j++) {
+            error[i][j] = abs(exact[i][j] - euler[i][j]);
+        }
+    }
+
+    printTable("exact", exact, N, POINTS);
+    printTable("rkf45", rkf, N, POINTS);
+    printTable("impeuler", euler, N, POINTS);
+    printTable("|exact - impeuler|", error, N, POINTS);
+    /*
+    printCsv("exact", "t, x1, x2", exact, N, POINTS);
+    printCsv("rkf45", "t, x1, x2", exact, N, POINTS);
+    printCsv("impeuler", "t, x1, x2", euler, N, POINTS);
+    printCsv("|exact - impeuler|", "t, x1, x2", error, N, POINTS);
     return 0;
+    */
 }
 
 double **evalExact(int n, int points) {
@@ -39,7 +51,6 @@ double **evalRkf45(int n, int points) {
     for (int i = 0; i < points; i++) {
         values[i] = new double[n];
     }
-
     for (int i = 0; i < points; i++) {
         tout = getStep(i);
         flag = 1;
@@ -53,18 +64,17 @@ double **evalRkf45(int n, int points) {
 
 double **evalImpEuler(int n, int points, double step) {
     double x[] = {1, 4};
-    double t = 1.0;
-    double tout;
-    double work[15];
-    int iwork[5];
+    double t;
     double **values = new double *[points];
     for (int i = 0; i < points; i++) {
         values[i] = new double[n];
     }
-
-    for (int i = 0; i < points; i++) {
-        tout = getStep(i);
-        impEulerMethod(fun, n, x, t, tout, step);
+    for (int i = 0; i < n; ++i) {
+        values[0][i] = x[i];
+    }
+    for (int i = 1; i < points; i++) {
+        t = getStep(i - 1);
+        impEuler(fun, n, x, t, step);
         for (int j = 0; j < n; ++j) {
             values[i][j] = x[j];
         }
@@ -85,12 +95,25 @@ void printTable(string table, double **values, int n, int points) {
     cout << endl << table << endl;
     cout << fixed;
     for (int i = 0; i < points; i++) {
-        cout << setprecision(2)
+        cout << setprecision(1)
              << getStep(i) << ":\t(";
         for (int j = 0; j < n; ++j) {
             cout << setprecision(8)
                  << values[i][j]
                  << (j != n - 1 ? ", " : ")\n");
+        }
+    }
+}
+
+void printCsv(string table, string cols, double **values, int n, int points) {
+    cout << endl << table << endl << cols << endl;
+    for (int i = 0; i < points; i++) {
+        cout << setprecision(2)
+             << getStep(i) << ", ";
+        for (int j = 0; j < n; ++j) {
+            cout << setprecision(8)
+                 << values[i][j]
+                 << (j != n - 1 ? ", " : "\n");
         }
     }
 }
