@@ -1,3 +1,4 @@
+#include <c++/fstream>
 #include "main.h"
 
 int main() {
@@ -16,13 +17,13 @@ int main() {
     printTable("rkf45", rkf, N, POINTS);
     printTable("impeuler", euler, N, POINTS);
     printTable("|exact - impeuler|", error, N, POINTS);
-    /*
+
     printCsv("exact", "t, x1, x2", exact, N, POINTS);
     printCsv("rkf45", "t, x1, x2", exact, N, POINTS);
-    printCsv("impeuler", "t, x1, x2", euler, N, POINTS);
-    printCsv("|exact - impeuler|", "t, x1, x2", error, N, POINTS);
+    printCsv("euler", "t, x1, x2", euler, N, POINTS);
+    printCsv("euler_error", "t, x1, x2", error, N, POINTS);
     return 0;
-    */
+
 }
 
 double **evalExact(int n, int points) {
@@ -106,14 +107,19 @@ void printTable(string table, double **values, int n, int points) {
 }
 
 void printCsv(string table, string cols, double **values, int n, int points) {
-    cout << endl << table << endl << cols << endl;
+    string filename = "../../data/" + table + ".csv";
+    ofstream out(filename);
+
+    out << cols << endl;
     for (int i = 0; i < points; i++) {
-        cout << setprecision(2)
+        out << setprecision(2)
              << getStep(i) << ", ";
         for (int j = 0; j < n; ++j) {
-            cout << setprecision(8)
+            out << setprecision(8)
                  << values[i][j]
                  << (j != n - 1 ? ", " : "\n");
         }
     }
+
+    out.close();
 }
