@@ -9,3 +9,4 @@ build*
 *.user
 *.idea
 *cmake-build-debug
+*.ipynb_checkpoints
