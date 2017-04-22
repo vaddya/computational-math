@@ -19,23 +19,22 @@
 \end{figure}
 
 Дифференциальное уравнение для вертикального прогиба имеет вид:
-\[
-\frac{d^4y}{dx^4} = - \frac{2}{I} \frac{dI}{dx}\cdot \frac{d^3y}{dx^3} -  \frac{1}{I} \frac{d^2I}{dx^2}\cdot \frac{d^2y}{dx^2} + \frac{\omega}{EI},
-\]
+\begin{equation}\label{eq:diff}
+	\frac{d^4y}{dx^4} = - \frac{2}{I} \frac{dI}{dx}\cdot \frac{d^3y}{dx^3} -  \frac{1}{I} \frac{d^2I}{dx^2}\cdot \frac{d^2y}{dx^2} + \frac{\omega}{EI},
+\end{equation}
+
 где $x$ -- горизонтальное расстояние вдоль балки, $y$ -- вертикальный прогиб, $l$ -- длина балки, $M$ -- изгибающий момент, $E$ -- модуль Юнга, $I$ -- момент инерции, $P$ -- нагрузка на балку.
 
 \begin{center}
 \begin{multicols}{2}
-$\omega = - \frac{d^2M}{dx^2}$
-
+$\omega = - \frac{d^2M}{dx^2}$\\
 $M(x) = -P \cdot (l - x)$
 \end{multicols}
 \end{center}
 
 \begin{center}
 \begin{multicols}{2}
-$E = 3\cdot 10^7$
-
+$E = 3\cdot 10^7$\\
 $I(x) = 5 \cdot (1 + 4 e^{-\frac{6x}{l}})$
 \end{multicols}
 \end{center}
@@ -43,10 +42,8 @@ $I(x) = 5 \cdot (1 + 4 e^{-\frac{6x}{l}})$
 Начальные условия:
 \begin{center}
 \begin{multicols}{3}
-$y(0) = y'(0) = 0$
-
-$y''(0) = \frac{Pl}{75}\cdot 10^{-7}$
-
+$y(0) = y'(0) = 0$\\
+$y''(0) = \frac{Pl}{75}\cdot 10^{-7}$\\
 $y'''(0) = \frac{P \cdot 3.8}{75}\cdot 10^{-7}$
 \end{multicols}
 \end{center}
@@ -57,32 +54,178 @@ $y'''(0) = \frac{P \cdot 3.8}{75}\cdot 10^{-7}$
 
 \section{Исходные данные}
 
-Значения нагрузки на балку: $500 \le P \le 1000$ с шагом $100$, $P_0 = 750$.
+Значения нагрузки на балку: 
+\begin{equation}\label{eq:p_values}
+	500 \le P \le 1000 \text{ с шагом } 100,\ P_0 = 750.
+\end{equation}
 
 Значения длины балки: $l = 50\cdot x^*$, где $x^*$ -- корень уравнения \ref{eq:int} на промежутке $[1, 4]$.
 
 \begin{equation}\label{eq:int}
-\int_0^{20} \frac{e^{-0.9z}}{z+x}dz = 0.1957981\cdot x
+	\int_0^{20} \frac{e^{-0.9z}}{z+x}dz = 0.1957981\cdot x
 \end{equation}
 
 \section{Выполнение работы}
 
+\subsection{Инструменты разработки}
+
+Python, Jupyter Notebooks and bla bla bla...
+
+\subsection{Анализ исходного уравнения}
+
+Рассмотрим последнее слагаемое исходного дифференциального уравнения:
+
+\[
+	\omega = -\frac{d^2M}{dx^2},\ \ \ M(x) = -P \cdot (l - x).
+\]
+
+Можно заметить, что $\frac{d^2M}{dx^2} = 0$ при $\forall x$, а значит и $\frac{\omega}{EI} = 0$ при $\forall x$.
+
+Таким образом дифференциально уравнение преобразуется к виду:
+\begin{equation}\label{eq:source}
+	\frac{d^4y}{dx^4} = - \frac{2}{I} \frac{dI}{dx}\cdot \frac{d^3y}{dx^3} - \frac{1}{I} \frac{d^2I}{dx^2}
+\end{equation}
+
+Рассмотрим функцию $I(x)$ и найдем ее производные:
+\begin{multicols}{3}
+\noindent
+\[
+	I(x) = 5(1 + 4e^{-\frac{6x}{l}})
+\]
+\[
+	\frac{dI(x)}{dx} = -\frac{120}{l}e^{-\frac{6x}{l}}
+\]
+\[
+	\frac{d^2I(x)}{dx^2} = \frac{720}{l}e^{-\frac{6x}{l}}
+\]
+\end{multicols}
+
+Все найденные значения можно подставить в уравнение \ref{eq:source}:
+\begin{equation}
+\frac{d^4y}{dx^4} = \frac{2}{5(1 + 4e^{-\frac{6x}{l}})} \cdot \frac{120}{l}e^{-\frac{6x}{l}} \cdot \frac{d^3y}{dx^3} - 
+\frac{1}{5(1 + 4e^{-\frac{6x}{l}})} \cdot \frac{720}{l}e^{-\frac{6x}{l}} \cdot \frac{d^2y}{dx^2}
+\end{equation}
+
+\subsection{Нахождение длины балки}
+
+По условию задачи длина балки $l = 50\cdot x^*$, где $x^*$ - корень \ref{eq:int} уравнения на промежутке $[1, 4]$. Для решения задачи была задана следующая функция:
+\begin{equation}
+F(x) = \int_0^{20} \frac{e^{-0.9z}}{z+x}dz - 0.1957981\cdot x
+\end{equation}
+
+Затем для нахождения корней функция $F(x)$ с начальным приближением $x = 2.5$ была использована функция \textbf{optimize.fsolve} из пакета \textbf{scipy}, являющаяся оберткой над алгоритмами \textsc{hybrd} и \textsc{hybrj} из библиотеки \textsc{minpack} для языка программирования \textsc{fortran}. 
+
+Для интегрирования использовалась функция \textbf{integrate.quad} из пакета \textbf{scipy}, применяющая технику из библиотеки \textsc{quadpack} для языка программирования \textsc{fortran}.
+
+Из найденного корня $x^* \approx 1.999696$ следует, что длина балки 
+$l \approx 99.984776$.
+
+\subsection{Решение дифференциального уравнения}\label{section:solve}
+
+Исходное дифференциальное с помощью подстановок \ref{eq:subs} было приведено к системе дифференциальных уравнений первого порядка \ref{eq:system}.
+
+\begin{equation}\label{eq:subs}
+x_1(t) = y(t),\ \ x_2(t) = y'(t),\ \ x_3(t) = y''(t),\ \ x_4(t) = y'''(t)
+\end{equation}
+
+\begin{equation}\label{eq:system}
+\begin{pmatrix}
+    x'_1(t) \\
+    x'_2(t) \\
+    x'_3(t) \\
+    x'_4(t) \\
+\end{pmatrix} =
+\begin{pmatrix}
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & - \frac{1}{I} \frac{d^2I}{dx^2} & - \frac{2}{I} \frac{dI}{dx} \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+    x_1(t) \\
+    x_2(t) \\
+    x_3(t) \\
+    x_4(t) \\
+\end{pmatrix}
+\end{equation}
+
+Для решения дифференциального уравнения была использована функция \textbf{integrate.odeint} из пакета \textbf{scipy}, которая применяет алгоритм \textsc{lsoda} из библиотеки \textsc{odepack} для языка программирования \textsc{fortran}.
+
+Для каждого значения нагрузки на балку из исходных данных \ref{eq:p_values} была решена система дифференциальных уравнений первого порядка \ref{eq:system} в диапазоне $(l-5) \div (l+5)$ с шагом $0.01$.
+
+\begin{figure}[H]
+\begin{center}
+	\vspace{-0.5cm}
+	\includegraphics[scale=0.65]{p}
+	\caption{Зависимость $y(t)$ для различных значений $P$}
+	\label{plt:p}
+	\vspace{-0.5cm}
+\end{center}
+\end{figure}
+
+На рисунке \ref{plt:p} изображена полученная зависимость $y(t)$ от независимой переменной $t$ для различных значений $P$. Пунктирной линией на граифке изображена прямая $t = l$.
+
+\subsection{Нахождение значения $y(l)$ при $P = P_0$}
+
+По полученным значениям в пункте \ref{section:solve} был построен сплайн $S(P)$ и найдено значение $S(P) = y(l)$ при $P = P_0 = 750$.
+
+Для кубической интерполяции была использована функция \textbf{interpolate.interp1d} с параметром \texttt{'cubic'} из пакета \textbf{scipy}, которая использует алгоритм из библиотеки \textsc{fitpack} для языка программирования \textsc{fortran}.
+
+По найденному сплайну было найдено значение $S(P_0) \approx 0.001317$.
+
+\begin{figure}[H]
+\begin{center}
+	\vspace{-0.5cm}
+	\includegraphics[scale=0.65]{l}
+	\caption{Зависимость $f(l)$ от $P$}
+	\label{plt:l}
+	\vspace{-0.5cm}
+\end{center}
+\end{figure}
+
+На рисунке \ref{plt:l} изображена полученная зависимость значения $f(l)$ от $P$. Пунктирной линией на граифке изображена прямая $P = P_0 = 750$.
+
+\subsection{Анализ влияния погрешности начальных условий на решение}
+
+Влияние погрешностей начальных условий было проанализировано при помощи измениния коэффициентов в функции $I(x)$:
+\begin{equation}
+I(x) = \alpha \cdot(1 + 4e^{-\frac{\beta\cdot x}{l}})
+\end{equation}
+
+Коэффициенты $\alpha$ и $\beta$ варировались в пределах $\pm 10\ \%$ с шагом $h = 0.01$, взяв при этом $P = P_0 = 750$:
+\begin{multicols}{2}
+\noindent
+\[
+	a = a_0 \pm 0.1\cdot a_0 = 5 \pm 0.5 = 4.5 \div 5.5
+\]
+\[
+	b = b_0 \pm 0.1\cdot b_0 = 6 \pm 0.6 = 5.4 \div 6.6
+\]
+\end{multicols}
+
+Для оценки влияния параметра на решение была введена функцию $\epsilon(a, b)$, равную модулю разности найденного значения $y_{a_0b_0}(l) = S(P_0)$ и значения $y_{ab}(l)$, полученного при $\alpha = a$ и $\beta = b$:
+
+\begin{equation}
+	\epsilon(a, b) = |\ y_{a_0b_0}(l) - y_{ab}(l)\ |
+\end{equation}
+
+\begin{figure}[H]
+\begin{center}
+	\vspace{-0.5cm}
+	\includegraphics[scale=0.61]{ab}
+	\caption{Зависимость $\epsilon$ от значений $a$ и $b$}
+	\label{plt:ab}
+	\vspace{-0.5cm}
+\end{center}
+\end{figure}
+
+На рисунке \ref{plt:ab} изображена полученная зависимость $\epsilon$ от различных значений $a$ и $b$. Из построенного графика видно, что варьирование параметра  $\alpha$  в выбранном диапазоне имеет слабое влияение на итоговый результат, в то время как даже небольшое возмущение параметра  $\beta$  в аналогичном диапазоне приводит к изменению итогового результата.
+
 \section{Результаты}
 
+В ходе работы была найдена длина балки, решено дифференциальное уравнение, описывающее вертикальный прогиб балки, был построен сплайн по значениям $y(l)$ в зависимости от $P$ и с его помощью оценено значение $y(l)$ для $P_0$, а также исследовано влияние точности исходных данных на решение. Полученная информация позволила сделать выводы о влиянии точности задания коэффициентов в одном из начальных уравнений на получаемое решение.
+
 \section*{Приложение}
-
-\captionof{lstlisting}{main.h}
-\lstinputlisting[
-	basicstyle=\scriptsize,	
-	numberstyle=\scriptsize,
-	label=code:mainh
-]{main.h}
-
-\captionof{lstlisting}{main.cpp}
-\lstinputlisting[
-	basicstyle=\scriptsize,	
-	numberstyle=\scriptsize,
-	label=code:maincpp
-]{main.cpp}
 
 \end{document}
