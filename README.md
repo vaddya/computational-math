@@ -1,7 +1,5 @@
 # Вычислительная математика [![Build Status](https://travis-ci.com/vaddya/computational-math.svg?token=pjDpbjDkzyYVhqcfMzbZ&branch=master)](https://travis-ci.com/vaddya/computational-math)
 
-![СПбПУ](http://www.spbstu.ru/university/organizational-documents/corporate-identity/identity-files/logo_main.png)
-
 1. __Использование стандартных подпрограмм для приближенного вычисления интеграла:__ 
 [С++](https://github.com/vaddya/computational-math/tree/master/lab1/code) ·
 [Отчет](https://github.com/vaddya/computational-math/releases/download/v4.1/lab1.pdf)
